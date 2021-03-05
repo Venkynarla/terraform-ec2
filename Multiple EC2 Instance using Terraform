@@ -1,5 +1,3 @@
-Creating multiple EC2 instances using Terraform on Windows 10.
-
 ## Step 1 ##
 In your current user directory, create a folder named ".aws". 
 Also create a file named "credentials" with your AWS credentials.

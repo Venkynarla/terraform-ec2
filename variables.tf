@@ -10,7 +10,7 @@ variable "sec_group_description" {
   default = "Ansible Security Group - allow All Trafic to My IP"
 }
 variable "user_data" {
-  default = "./cloud-config.sh"
+  default = "./config.sh"
 }
 
 variable "volume_size" {

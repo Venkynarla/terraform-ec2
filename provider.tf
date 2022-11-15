@@ -50,6 +50,7 @@ resource "aws_instance" "ec2-tf" {
     ]
   subnet_id = "${aws_subnet.custom-subnet-tf.id}"
   key_name = "my_key.pem"
+  
   tags = {
     Name ="ec2-tf"
   }

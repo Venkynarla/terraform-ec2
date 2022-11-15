@@ -10,7 +10,7 @@ resource "aws_vpc" "custom-vpc-tf" {
   } 
 }
 resource "aws_subnet" "custom-subnet-tf" {
-    vpc_id = "${aws_vpc.custom-vpc-tf.id}"
+    vpc_id = "${aws_vpc.custom-vpc-tf.name}"
     cidr_block = "190.160.1.0/24"
 
     tags = {
@@ -20,7 +20,7 @@ resource "aws_subnet" "custom-subnet-tf" {
 resource "aws_security_group" "security-tf" {
   name        = "security-tf"
   description = "Allow all inbound traffic"
-  vpc_id      = aws_vpc.custom-vpc-tf.id
+  vpc_id      = "${aws_vpc.custom-vpc-tf.name}"
 
   ingress {
     description      = "allow all traffic"

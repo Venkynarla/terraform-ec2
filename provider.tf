@@ -41,12 +41,11 @@ resource "aws_security_group" "security-tf" {
     Name = "security-tf"
   }
 }
-resource "aws_instance" "ubuntu" {
-  ami = "ami-08c40ec9ead489470" #us-east-1
+resource "aws_instance" "ubuntu"{
+  ami = "ami-08c40ec9ead489470"
   instance_type = "t2.micro"
   security_groups =["aws_security_group.security.tf.name"]
    key_name = "my_key"
-  
   tags = {
     Name ="test-terra"
   }

@@ -37,7 +37,7 @@ resource "aws_security_group" "security-tf" {
   }
 
   tags = {
-    Name = "custom-group-tf"
+    Name = "security-tf"
   }
 }
 resource "aws_instance" "ec2-tf" {

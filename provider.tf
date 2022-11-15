@@ -47,9 +47,6 @@ resource "aws_instance" "testterra" {
   security_groups =["aws_security_group.security.tf.name"]
   vpc = ["aws_vpc.custom-vpc-tf.name"]
   subnet = ["aws_sunet.custom-subnet-tf.name"]
-  network_interface {
-    associate_public_ip_address = true
-  }
   key_name = "my_key.pem"
   
   tags = {

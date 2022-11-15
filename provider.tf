@@ -41,14 +41,19 @@ resource "aws_security_group" "security-tf" {
     Name = "security-tf"
   }
 }
-resource "aws_instance" "testterra" {
+  provider "aws"{
+  region ="us-east-1"
+}
+resource "aws_instance" "ubuntu"
   ami = "ami-08c40ec9ead489470" #us-east-1
   instance_type = "t2.micro"
+  key_pair = "my_key"
+  vpc = "aws_vpc.custom-vpc-tf.name"
+  subnet = "aws_subnet.custom-subnet-tf.name"
   security_groups =["aws_security_group.security.tf.name"]
-  key_name = "my_key.pem"
   
   tags = {
-    Name ="ec2-tf"
+    Name ="test-terra"
   }
 }
 

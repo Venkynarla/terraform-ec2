@@ -24,16 +24,17 @@ resource "aws_security_group" "security-tf" {
 
   ingress {
     description      = "allow all traffic"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "all"
-    cidr_blocks      = [aws_vpc.custom-vpc-tf.cidr_block]
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
   }
 
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "all"
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+     cidr_blocks      = ["0.0.0.0/0"]
   }
 
   tags = {
@@ -43,11 +44,12 @@ resource "aws_security_group" "security-tf" {
 resource "aws_instance" "testterra" {
   ami = "ami-08c40ec9ead489470" #us-east-1
   instance_type = "t2.micro"
+  security_groups =["aws_security_group.security.tf.name"]
+  vpc = ["aws_vpc.custom-vpc-tf.name"]
+  subnet = ["aws_sunet.custom-subnet-tf.name"]
   network_interfaces {
     associate_public_ip_address = true
   }
-  vpc_security_group_ids = ["sg-"${vpc_security_group_id}""]
-  subnet_id = "${aws_subnet.custom-subnet-tf.id}"
   key_name = "my_key.pem"
   
   tags = {

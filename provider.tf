@@ -43,12 +43,10 @@ resource "aws_security_group" "security-tf" {
 resource "aws_instance" "testterra" {
   ami = "ami-08c40ec9ead489470" #us-east-1
   instance_type = "t2.micro"
-  security_group_id        = [
-        "${aws_security_group.security-tf.id}"
-    ]
-  vpc_id = [
-    "${aws_vpc.custom-vpc-tf.id}"
-    ]
+  network_interfaces {
+    associate_public_ip_address = true
+  }
+  vpc_security_group_ids = ["sg-"${vpc_security_group_id}""]
   subnet_id = "${aws_subnet.custom-subnet-tf.id}"
   key_name = "my_key.pem"
   

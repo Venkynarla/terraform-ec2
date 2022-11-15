@@ -40,12 +40,14 @@ resource "aws_security_group" "security-tf" {
     Name = "security-tf"
   }
 }
-resource "aws_instance" "ec2-tf" {
+resource "aws_instance" "testterra" {
   ami = "ami-08c40ec9ead489470" #us-east-1
   instance_type = "t2.micro"
-  vpc_security_group_ids        = [
-        "${aws_security_group.security-tf.id}" ,
-        "${aws_vpc.custom-vpc-tf.id}"
+  security_group_id        = [
+        "${aws_security_group.security-tf.id}"
+    ]
+  vpc_id = [
+    "${aws_vpc.custom-vpc-tf.id}"
     ]
   subnet_id = "${aws_subnet.custom-subnet-tf.id}"
   key_name = "my_key.pem"

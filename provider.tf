@@ -41,9 +41,6 @@ resource "aws_security_group" "security-tf" {
     Name = "security-tf"
   }
 }
-  provider "aws"{
-  region ="us-east-1"
-}
 resource "aws_instance" "ubuntu" {
   ami = "ami-08c40ec9ead489470" #us-east-1
   instance_type = "t2.micro"

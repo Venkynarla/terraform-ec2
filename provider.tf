@@ -45,8 +45,6 @@ resource "aws_instance" "testterra" {
   ami = "ami-08c40ec9ead489470" #us-east-1
   instance_type = "t2.micro"
   security_groups =["aws_security_group.security.tf.name"]
-  vpc = ["aws_vpc.custom-vpc-tf.name"]
-  subnet = ["aws_sunet.custom-subnet-tf.name"]
   key_name = "my_key.pem"
   
   tags = {

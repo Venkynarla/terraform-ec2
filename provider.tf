@@ -12,7 +12,7 @@ resource "aws_vpc" "vpc_test" {
 resource "aws_subnet" "subnet_test" {
   vpc_id ="${aws_vpc.vpc_test.id}"
   cidr_block - "190.160.0.0/24"
-  availability_zone = "us-east-1"
+  availability_zone = "us-east-1a"
   
   tags ={
     Name="subnet_test"

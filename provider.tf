@@ -41,8 +41,7 @@ resource "aws_security_group" "security-tf" {
   }
 }
 resource "aws_instance" "ec2-tf" {
-  region = "us-east-1"
-  ami = "ami-08c40ec9ead489470"
+  ami = "ami-08c40ec9ead489470" #us-east-1
   instance_type = "t2.micro"
   vpc_security_group_ids        = [
         "${aws_security_group.security-tf.id}" ,

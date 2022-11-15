@@ -42,9 +42,9 @@ resource "aws_security_group" "security-tf" {
   }
 }
 resource "aws_instance" "terratest" {
-  ami                         = ami-08c40ec9ead489470
+  ami_id                      = ami-08c40ec9ead489470
   instance_type               = "t2.micro"
   subnet_id                   = element(aws_subnet.custom-subnet-tf.id)
-  vpc_security_group_ids      = [security-tf.security-tf.id]
+  vpc_security_group_ids      = [aws_security_groups.security-tf.name . aws_security_groups.security-tf.id]
   associate_public_ip_address = true
 }

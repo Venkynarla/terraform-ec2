@@ -77,6 +77,7 @@ resource "aws_instance" "terra_test" {
   instance_type               = "t2.micro"
   vpc_security_group_ids      = ["${aws_security_group.terraform_private_sg.id}"]
   subnet_id                   = aws_subnet.terraform-subnet.id
+  key_name                    = "new_key"
   count                       = 1
   associate_public_ip_address = true
   tags = {

@@ -3,7 +3,7 @@ provider "aws" {
 }
 ## Create VPC ##
 resource "aws_vpc" "terraform-vpc" {
-  cidr_block           = "172.16.0.0/16"
+  cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
   tags = {
     Name = "terraform-vpc"
@@ -66,8 +66,7 @@ output "aws_security_gr_id" {
 ## Create Subnets ##
 resource "aws_subnet" "terraform-subnet" {
   vpc_id            = aws_vpc.terraform-vpc.id
-  cidr_block        = "172.16.10.0/24"
-  availability_zone = "us-east-1a"
+  cidr_block        = "10.0.1.0/24"
 
   tags = {
     Name = "terraform-subnet"
@@ -78,8 +77,23 @@ output "aws_subnet_subnet" {
   value = aws_subnet.terraform-subnet.id
 }
 
+resource "aws_internet_gateway" "terra-igw" {
+  vpc_id            = aws_vpc.terraform-vpc.id
+}
+resource "aws_route_table" "terra-pub-rt" {
+  vpc_id            = aws_vpc.terraform-vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.terra-igw.id
+  }
+}
+resource "aws_route_table_association" "pub-rt-association" {
+  subnet_id = aws_subnet.terraform-subnet.id
+  route_table_id = aws_route_table.terra-rt.id
+}
+
 resource "aws_instance" "terra_test" {
-  ami                         = "ami-08c40ec9ead489470"
+  ami                         = "ami-0b0dcb5067f052a63"
   instance_type               = "t2.micro"
   vpc_security_group_ids      = ["${aws_security_group.task-sg.id}"]
   subnet_id                   = aws_subnet.terraform-subnet.id

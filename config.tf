@@ -92,7 +92,7 @@ resource "aws_route_table_association" "pub-rt-association" {
   route_table_id = aws_route_table.terra-pub-rt.id
 }
 
-resource "aws_instance" "terra_test" {
+resource "aws_instance" "jenkins-node" {
   ami                         = "ami-0b0dcb5067f052a63"
   instance_type               = "t2.micro"
   vpc_security_group_ids      = ["${aws_security_group.task-sg.id}"]
@@ -101,6 +101,18 @@ resource "aws_instance" "terra_test" {
   count                       = 1
   associate_public_ip_address = true
   tags = {
-    Name        = "terra_test"
+    Name        = "jenkins-node"
+  }
+}
+resource "aws_instance" "deploy-node" {
+  ami                         = "ami-0b0dcb5067f052a63"
+  instance_type               = "t2.micro"
+  vpc_security_group_ids      = ["${aws_security_group.task-sg.id}"]
+  subnet_id                   = aws_subnet.terraform-subnet.id
+  key_name                    = "new_key"
+  count                       = 1
+  associate_public_ip_address = true
+  tags = {
+    Name        = "deploy-node"
   }
 }

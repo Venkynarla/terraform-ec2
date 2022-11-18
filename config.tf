@@ -89,7 +89,7 @@ resource "aws_route_table" "terra-pub-rt" {
 }
 resource "aws_route_table_association" "pub-rt-association" {
   subnet_id = aws_subnet.terraform-subnet.id
-  route_table_id = aws_route_table.terra-rt.id
+  route_table_id = aws_route_table.terra-pub-rt.id
 }
 
 resource "aws_instance" "terra_test" {

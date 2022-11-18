@@ -94,7 +94,7 @@ resource "aws_route_table_association" "pub-rt-association" {
 
 resource "aws_instance" "jenkins-node" {
   ami                         = "ami-0b0dcb5067f052a63"
-  instance_type               = "t2.micro"
+  instance_type               = "t2.medium"
   vpc_security_group_ids      = ["${aws_security_group.task-sg.id}"]
   subnet_id                   = aws_subnet.terraform-subnet.id
   key_name                    = "new_key"

@@ -72,6 +72,25 @@ output "aws_subnet_subnet" {
   value = aws_subnet.terraform_subnet.id
 }
 
+}
+
+resource "aws_internet_gateway" "terra-igw" {
+  vpc_id            = aws_vpc.terraform-vpc.id
+}
+
+resource "aws_route_table" "terra-pub-rt" {
+  vpc_id            = aws_vpc.terraform-vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.terra-igw.id
+  }
+}
+
+resource "aws_route_table_association" "pub-rt-association" {
+  subnet_id = aws_subnet.terraform_subnet.id
+  route_table_id = aws_route_table.terra-pub-rt.id
+}
+
 
 resource "aws_instance" "jenkins-node" {
   ami                         = "ami-0b0dcb5067f052a63"

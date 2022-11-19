@@ -106,7 +106,7 @@ resource "aws_route_table_association" "pub-rt-association" {
 
 resource "aws_eip" "terra_nat_eip" {
   vpc       = true
-  depends_on - [aws_internet_gateway.terra-igw]
+  depends_on = [aws_internet_gateway.terra-igw]
 }
 
 resource "aws_nat_gateway" "terra-nat" {

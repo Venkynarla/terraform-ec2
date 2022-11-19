@@ -68,7 +68,7 @@ resource "aws_subnet" "terraform_pub_subnet" {
   }
 }
 
-output "aws_subnet_subnet" {
+output "aws_subnet_pubsubnet" {
   value = aws_subnet.terraform_pub_subnet.id
 }
 
@@ -83,7 +83,7 @@ resource "aws_subnet" "terraform_pvt_subnet" {
   }
 }
 
-output "aws_subnet_subnet" {
+output "aws_subnet_pvtsubnet" {
   value = aws_subnet.terraform_pvt_subnet.id
 }
 

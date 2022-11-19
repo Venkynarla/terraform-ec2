@@ -64,75 +64,20 @@ resource "aws_subnet" "terraform_pub_subnet" {
   availability_zone  = "us-east-1a"
   
   tags = {
-    Name = "terraform_pub_subnet"
+    Name = "terraform_subnet"
   }
 }
 
-output "aws_subnet_pubsubnet" {
-  value = aws_subnet.terraform_pub_subnet.id
+output "aws_subnet_subnet" {
+  value = aws_subnet.terraform_subnet.id
 }
 
-resource "aws_subnet" "terraform_pvt_subnet" {
-  vpc_id            = aws_vpc.terraform-vpc.id
-  cidr_block        = "10.0.1.0/24"
-  map_public_ip_on_launch  = "false"
-  availability_zone  = "us-east-1a"
-  
-  tags = {
-    Name = "terraform_pvt_subnet"
-  }
-}
-
-output "aws_subnet_pvtsubnet" {
-  value = aws_subnet.terraform_pvt_subnet.id
-}
-
-resource "aws_internet_gateway" "terra-igw" {
-  vpc_id            = aws_vpc.terraform-vpc.id
-}
-
-resource "aws_route_table" "terra-pub-rt" {
-  vpc_id            = aws_vpc.terraform-vpc.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.terra-igw.id
-  }
-}
-
-resource "aws_route_table_association" "pub-rt-association" {
-  subnet_id = aws_subnet.terraform_pub_subnet.id
-  route_table_id = aws_route_table.terra-pub-rt.id
-}
-
-resource "aws_eip" "terra_nat_eip" {
-  vpc       = true
-  depends_on = [aws_internet_gateway.terra-igw]
-}
-
-resource "aws_nat_gateway" "terra-nat" {
-  allocation_id   =   aws_eip.terra_nat_eip.id
-  subnet_id       =   aws_subnet.terraform_pub_subnet.id
-}
-
-resource "aws_route_table" "terra-pvt-rt" {
-  vpc_id    =  aws_vpc.terraform-vpc.id
-  
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id    =   aws_nat_gateway.terra-nat.id
-  }
-}
-
-resource "aws_route_table_association" "pvt-rt-association" {
-  subnet_id = aws_subnet.terraform_pvt_subnet.id
-  route_table_id = aws_route_table.terra-pvt-rt.id
-}
 
 resource "aws_instance" "jenkins-node" {
   ami                         = "ami-0b0dcb5067f052a63"
   instance_type               = "t2.micro"
   vpc_security_group_ids      = ["${aws_security_group.task-sg.id}"]
-  subnet_id                   = aws_subnet.terraform_pub_subnet.id
+  subnet_id                   = aws_subnet.terraform_subnet.id
   key_name                    = "task-1"
   count                       = 1
   associate_public_ip_address = true
@@ -144,10 +89,10 @@ resource "aws_instance" "deploy-node" {
   ami                         = "ami-0b0dcb5067f052a63"
   instance_type               = "t2.micro"
   vpc_security_group_ids      = ["${aws_security_group.task-sg.id}"]
-  subnet_id                   = aws_subnet.terraform_pvt_subnet.id
+  subnet_id                   = aws_subnet.terraform_subnet.id
   key_name                    = "task-1"
   count                       = 1
-  associate_public_ip_address = false
+  associate_public_ip_address = true
   tags = {
     Name        = "deploy-node"
   }

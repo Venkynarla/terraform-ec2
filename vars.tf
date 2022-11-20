@@ -1,1 +1,35 @@
+variable "vpc_cidr" {
+  default = "10.0.0.0/16"
+}
+variable "vpc_name" {
+  default = "terraform-vpc"
+}
+variable "vpc_id" {
+  default = "aws_vpc.terraform-vpc.id"
+}
+variable "subnet_name" {
+  default = "terraform_subnet"
+}
+variable "subnet_id" {
+  default = "aws_subnet.terraform_subnet.id"
+}
+variable "subnet_cidr" {
+  default = "10.0.0.0/24"
+}
+variable "subnet_zone" {
+  default = "us-east-1a"
+}
+variable "rt_cidr" {
+  default = "0.0.0.0/0"
+}
+variable "igw_id" {
+  default = "aws_internet_gateway.terra-igw.id"
+}
+variable "rt_id" {
+  default = "aws_route_table.terra-pub-rt.id"
+}
+
+resource "aws_internet_gateway" "terra-igw" {
+  vpc_id            = "${var.vpc_id}"
+}
 

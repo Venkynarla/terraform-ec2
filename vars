@@ -35,7 +35,7 @@ variable "instance_type" {
   default = "t2.micro"
 }
 variable "key_name" {
-  default = "task-1"
+  default = "task-key"
 }
 variable "instance_count" {
   default = "1"
